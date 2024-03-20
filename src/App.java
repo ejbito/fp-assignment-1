@@ -1,16 +1,12 @@
 public class App {
-    /*
-     * initialise class instances
-     * - sales report
-     * - order
-     * - update item price
-     */
+    private static Helper helper = new Helper();
     private static MainMenu mainMenu = new MainMenu();
+
     public static void main(String[] args) throws Exception {
         boolean exit = false;
         while (!exit) {
             mainMenu.displayMainMenu();
-            String userInput = mainMenu.getUserInput();
+            String userInput = helper.getUserInput();
             switch (userInput) {
                 case "a": // order
                     break;
