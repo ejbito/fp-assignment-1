@@ -1,6 +1,9 @@
 public class App {
     private static Helper helper = new Helper();
     private static MainMenu mainMenu = new MainMenu();
+    private static OrderMenu orderMenu = new OrderMenu();
+    private static UpdatePrice updatePrice = new UpdatePrice();
+    private static FriesStockManager friesStockManager = new FriesStockManager();
 
     public static void main(String[] args) throws Exception {
         boolean exit = false;
@@ -8,15 +11,19 @@ public class App {
             mainMenu.displayMainMenu();
             String userInput = helper.getUserInput();
             switch (userInput) {
-                case "a": // order
+                case "a":
+                    orderMenu.orderMenu();
                     break;
-                case "b": // sales report
+                case "b":
+                    // todo : implement sales report
                     break;
-                case "c": // update item price
+                case "c":
+                    updatePrice.updatePriceMenu();
                     break;
-                case "d": // check fry stock *addition*
+                case "d": // check fry stock *for testing*
+                    friesStockManager.checkFriesStock();
                     break;
-                case "e": // exit
+                case "e":
                     System.out.println("\nExiting...\n");
                     exit = true;
                     break;

@@ -2,8 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UpdatePrice {
-    private static Map<String, FoodItem> items = new HashMap<>();
     private static Helper helper = new Helper();
+    private static final Map<String, FoodItem> items = new HashMap<>();
 
     static {
         items.put("Burrito", new FoodItem("Burrito", 7.0));
