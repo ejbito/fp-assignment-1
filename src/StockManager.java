@@ -1,4 +1,4 @@
-public class FriesStockManager {
+public class StockManager {
     private int friesStock = 0;
 
     public void checkFriesStock() {

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserOrder {
+public class Order {
     private List<FoodItem> items = new ArrayList<>();
     private boolean isMeal = false;
     private static final double MEAL_DISCOUNT = 3.0;

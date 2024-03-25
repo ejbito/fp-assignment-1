@@ -6,8 +6,7 @@ public class MainMenu {
         System.out.println("a) Order");
         System.out.println("b) Show sales report");
         System.out.println("c) Update prices");
-        System.out.println("d) Check fry stock");
-        System.out.println("e) Exit");
+        System.out.println("d) Exit");
         System.out.print("Please select: ");
     }
 }

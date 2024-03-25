@@ -2,8 +2,8 @@ public class App {
     private static Helper helper = new Helper();
     private static MainMenu mainMenu = new MainMenu();
     private static UpdatePrice updatePrice = new UpdatePrice();
-    private static FriesStockManager friesStockManager = new FriesStockManager();
-    private static SalesReport salesReport = new SalesReport(friesStockManager);
+    private static StockManager stockManager = new StockManager();
+    private static SalesReport salesReport = new SalesReport(stockManager);
     private static OrderMenu orderMenu = new OrderMenu(salesReport);
 
     public static void main(String[] args) throws Exception {
@@ -21,10 +21,7 @@ public class App {
                 case "c":
                     updatePrice.updatePriceMenu();
                     break;
-                case "d": // check fry stock *for testing*
-                    friesStockManager.checkFriesStock();
-                    break;
-                case "e":
+                case "d":
                     System.out.println("\nExiting...\n");
                     exit = true;
                     break;
