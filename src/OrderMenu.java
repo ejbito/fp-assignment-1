@@ -1,7 +1,12 @@
 public class OrderMenu {
-    private static Helper helper = new Helper();
-    private static FriesStockManager friesStockManager = new FriesStockManager();
-    private static UpdatePrice updatePrice = new UpdatePrice();
+    private Helper helper = new Helper();
+    private FriesStockManager friesStockManager = new FriesStockManager();
+    private UpdatePrice updatePrice = new UpdatePrice();
+    private SalesReport salesReport;
+
+    public OrderMenu(SalesReport salesReport) {
+        this.salesReport = salesReport;
+    }
 
     public void orderMenu() {
         UserOrder userOrder = new UserOrder();
@@ -103,7 +108,7 @@ public class OrderMenu {
         }
         System.out.println("Change returned: $" + String.format("%.2f", paidAmount - total));
         
-        // todo : update sales report
+        salesReport.updateSales(userOrder);
         
         displayWaitTime(userOrder);
     }

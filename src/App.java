@@ -1,9 +1,10 @@
 public class App {
     private static Helper helper = new Helper();
     private static MainMenu mainMenu = new MainMenu();
-    private static OrderMenu orderMenu = new OrderMenu();
     private static UpdatePrice updatePrice = new UpdatePrice();
     private static FriesStockManager friesStockManager = new FriesStockManager();
+    private static SalesReport salesReport = new SalesReport(friesStockManager);
+    private static OrderMenu orderMenu = new OrderMenu(salesReport);
 
     public static void main(String[] args) throws Exception {
         boolean exit = false;
@@ -15,7 +16,7 @@ public class App {
                     orderMenu.orderMenu();
                     break;
                 case "b":
-                    // todo : implement sales report
+                    salesReport.showSalesReport();
                     break;
                 case "c":
                     updatePrice.updatePriceMenu();
