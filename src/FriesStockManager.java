@@ -1,5 +1,5 @@
 public class FriesStockManager {
-    private int friesStock = 5;
+    private int friesStock = 0;
 
     public void checkFriesStock() {
         System.out.println("Current fries stock in warmer: " + friesStock);

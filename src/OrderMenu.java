@@ -1,10 +1,10 @@
 public class OrderMenu {
     private static Helper helper = new Helper();
     private static FriesStockManager friesStockManager = new FriesStockManager();
-    private static UserOrder userOrder = new UserOrder();
     private static UpdatePrice updatePrice = new UpdatePrice();
 
     public void orderMenu() {
+        UserOrder userOrder = new UserOrder();
         boolean exit = false;
         while (!exit) {
             System.out.println("\n> Select the food item");
@@ -15,19 +15,19 @@ public class OrderMenu {
             System.out.println("5. No more");
             int userInput = helper.getIntInput("Please select: ");
             switch (userInput) {
-                case 1: // Burrito
+                case 1:
                     addItem(userOrder, "Burrito");
                     break;
-                case 2: // Fries
+                case 2:
                     addItem(userOrder, "Fries");
                     break;
-                case 3: // Soda
+                case 3:
                     addItem(userOrder, "Soda");
                     break;
-                case 4: // Meal
+                case 4:
                     addMeal(userOrder);
                     break;
-                case 5: // No more
+                case 5:
                     exit = true;
                     processPayment(userOrder);
                     break;
@@ -38,11 +38,10 @@ public class OrderMenu {
         }
     }
 
-    // Manage Fries
-    private void manageFries(int friesCount) {
+    private void updateFriesStockAfterCalculation(int friesCount) {
         int currentStock = friesStockManager.getFriesStock();
         if (friesCount <= currentStock) {
-            friesStockManager.updateFriesStock(friesCount);
+            friesStockManager.updateFriesStock(-friesCount);
         } else {
             int friesNeeded = friesCount - currentStock;
             int batchesToCook = (int)Math.ceil((double) friesNeeded / 5);
@@ -50,7 +49,16 @@ public class OrderMenu {
         }
     }
 
-    // Add Item
+    private int calculateFriesTime(int friesCount) {
+        int currentStock = friesStockManager.getFriesStock();
+        int additionalFriesNeeded = friesCount - currentStock;
+        if (additionalFriesNeeded > 0) {
+            int batchesNeeded = (int) Math.ceil((double) additionalFriesNeeded / 5);
+            return batchesNeeded * 8;
+        }
+        return 0;
+    }
+
     private void addItem(UserOrder userOrder, String itemName) {
         FoodItem item = updatePrice.getFoodItem(itemName);
         if (item != null) {
@@ -59,14 +67,13 @@ public class OrderMenu {
                 userOrder.addItem(new FoodItem(item.getName(), item.getPrice()));
             }
             if ("Fries".equals(itemName)) {
-                manageFries(itemCount);
+                calculateFriesTime(itemCount);
             }
         } else {
             System.out.println("Item not found: " + itemName);
         }
     }
     
-    // Add Meal
     private void addMeal(UserOrder userOrder) {
         FoodItem burrito = updatePrice.getFoodItem("Burrito");
         FoodItem fries = updatePrice.getFoodItem("Fries");
@@ -84,7 +91,6 @@ public class OrderMenu {
         }
     }
 
-    // Process Payment
     private void processPayment(UserOrder userOrder) {
         double total = userOrder.calculateTotal();
         System.out.println("\nTotal for your order is $" + String.format("%.2f", total));
@@ -116,16 +122,13 @@ public class OrderMenu {
         int burritoBatches = (int) Math.ceil(burritoCount / 2.0);
         int burritoTime = burritoBatches * 9;
     
-        int currentStock = friesStockManager.getFriesStock();
-        int additionalFriesNeeded = friesCount - currentStock;
-        int friesTime = 0;
-        if (additionalFriesNeeded >= 0) {
-            int batchesNeeded = (int) Math.ceil((double) additionalFriesNeeded / 5);
-            friesTime = batchesNeeded * 8;
-        }
+        int friesTime = calculateFriesTime(friesCount);
     
         int totalWaitTime = Math.max(burritoTime, friesTime);
-        System.out.println("Estimated wait time for your order is: " + totalWaitTime + " minutes.");
+        System.out.println("\nEstimated wait time for your order is: " + totalWaitTime + " minutes.");
+    
+        updateFriesStockAfterCalculation(friesCount);
+    
         System.out.println(friesStockManager.getFriesStock() + " serves of fries will be left for next order.");
     }
 }
