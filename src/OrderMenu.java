@@ -1,3 +1,7 @@
+import helper.Helper;
+import helper.IntParser;
+import helper.DoubleParser;
+
 public class OrderMenu {
     private Helper helper = new Helper();
     private StockManager stockManager = new StockManager();
@@ -18,7 +22,7 @@ public class OrderMenu {
             System.out.println("3. Soda");
             System.out.println("4. Meal (1 Burrito, 1 Fries, 1 Soda)");
             System.out.println("5. No more");
-            int userInput = helper.getIntInput("Please select: ");
+            int userInput = helper.getInput("Please select: ", new IntParser());
             switch (userInput) {
                 case 1:
                     addItem(order, "Burrito");
@@ -67,7 +71,7 @@ public class OrderMenu {
     private void addItem(Order order, String itemName) {
         FoodItem item = updatePrice.getFoodItem(itemName);
         if (item != null) {
-            int itemCount = helper.getIntInput("How many " + itemName.toLowerCase() + "s would you like to buy: ");
+            int itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
             for (int i = 0; i < itemCount; i++) {
                 order.addItem(new FoodItem(item.getName(), item.getPrice()));
             }
@@ -100,11 +104,11 @@ public class OrderMenu {
         double total = order.calculateTotal();
         System.out.println("\nTotal for your order is $" + String.format("%.2f", total));
         System.out.print("Please enter amount paid: $");
-        double paidAmount = helper.getDoubleInput("");
+        double paidAmount = helper.getInput("", new DoubleParser());
         while (paidAmount < total) {
             System.out.println("Insufficient payment. The total is $" + String.format("%.2f", total));
             System.out.print("Please enter amount paid: ");
-            paidAmount = helper.getDoubleInput("");
+            paidAmount = helper.getInput("", new DoubleParser());
         }
         System.out.println("Change returned: $" + String.format("%.2f", paidAmount - total));
         

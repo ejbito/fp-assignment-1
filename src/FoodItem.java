@@ -1,5 +1,5 @@
 public class FoodItem {
-    private String name;
+    private final String name;
     private double price;
 
     public FoodItem(String name, double price) {

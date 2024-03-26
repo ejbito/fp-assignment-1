@@ -1,12 +1,14 @@
-public class App {
-    private static Helper helper = new Helper();
-    private static MainMenu mainMenu = new MainMenu();
-    private static UpdatePrice updatePrice = new UpdatePrice();
-    private static StockManager stockManager = new StockManager();
-    private static SalesReport salesReport = new SalesReport(stockManager);
-    private static OrderMenu orderMenu = new OrderMenu(salesReport);
+import helper.Helper;
 
-    public static void main(String[] args) throws Exception {
+public class App {
+    private static final Helper helper = new Helper();
+    private static final MainMenu mainMenu = new MainMenu();
+    private static final UpdatePrice updatePrice = new UpdatePrice();
+    private static final StockManager stockManager = new StockManager();
+    private static final SalesReport salesReport = new SalesReport(stockManager);
+    private static final OrderMenu orderMenu = new OrderMenu(salesReport);
+
+    public static void main(String[] args) {
         boolean exit = false;
         while (!exit) {
             mainMenu.displayMainMenu();
@@ -25,7 +27,6 @@ public class App {
                     System.out.println("\nExiting...\n");
                     exit = true;
                     break;
-
                 default:
                     System.out.println("Invalid choice. Please select again.");
                     break;

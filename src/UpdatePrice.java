@@ -1,6 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import helper.DoubleParser;
+import helper.Helper;
+import helper.IntParser;
+
 public class UpdatePrice {
     private static Helper helper = new Helper();
     private static final Map<String, FoodItem> items = new HashMap<>();
@@ -21,7 +25,7 @@ public class UpdatePrice {
             System.out.println("4. Exit");
             System.out.print("Please select: ");
 
-            int choice = helper.getIntInput("");
+            int choice = helper.getInput("", new IntParser());
             String itemName = null;
             switch (choice) {
                 case 1:
@@ -41,7 +45,7 @@ public class UpdatePrice {
                     continue;
             }
             if (!exit && itemName != null) {
-                double newPrice = helper.getDoubleInput("Please enter new price: ");
+                double newPrice = helper.getInput("Please enter new price: ", new DoubleParser());
                 updatePrice(itemName, newPrice);
                 System.out.println("The unit price of " + itemName.toLowerCase() + " is updated to $" + newPrice);
             }
