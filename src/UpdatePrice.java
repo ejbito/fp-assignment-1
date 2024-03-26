@@ -1,9 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
 
-import helper.DoubleParser;
-import helper.Helper;
-import helper.IntParser;
+import helpers.DoubleParser;
+import helpers.Helper;
+import helpers.IntParser;
 
 public class UpdatePrice {
     private static Helper helper = new Helper();

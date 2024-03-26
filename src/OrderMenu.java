@@ -1,6 +1,6 @@
-import helper.Helper;
-import helper.IntParser;
-import helper.DoubleParser;
+import helpers.DoubleParser;
+import helpers.Helper;
+import helpers.IntParser;
 
 public class OrderMenu {
     private Helper helper = new Helper();
