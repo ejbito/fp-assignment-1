@@ -7,10 +7,15 @@ import helpers.IntParser;
 import menu.MenuItem;
 
 public class UpdatePrice {
-    private static Helper helper = new Helper();
-    private static final Map<String, MenuItem> items = new HashMap<>();
+    private final Helper helper;
+    private final Map<String, MenuItem> items = new HashMap<>();
 
-    static {
+    public UpdatePrice(Helper helper) {
+        this.helper = helper;
+        initializeItems();
+    }
+
+    private void initializeItems() {
         items.put("Burrito", new MenuItem("Burrito", 7.0));
         items.put("Fries", new MenuItem("Fries", 4.0));
         items.put("Soda", new MenuItem("Soda", 2.5));

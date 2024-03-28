@@ -6,7 +6,7 @@ import menu.MenuItem;
 public class OrderMenu {
     private Helper helper = new Helper();
     private StockManager stockManager = new StockManager();
-    private UpdatePrice updatePrice = new UpdatePrice();
+    private UpdatePrice updatePrice = new UpdatePrice(helper);
     private SalesReport salesReport;
 
     public OrderMenu(SalesReport salesReport) {
@@ -14,7 +14,7 @@ public class OrderMenu {
     }
 
     public void orderMenu() {
-        Order order = new Order();
+        Order order = new Order(3.00);
         boolean exit = false;
         while (!exit) {
             System.out.println("\n> Select the food item");

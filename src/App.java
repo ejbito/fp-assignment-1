@@ -1,13 +1,20 @@
 import helpers.Helper;
 
 public class App {
-    private static final Helper helper = new Helper();
-    private static final UpdatePrice updatePrice = new UpdatePrice();
-    private static final StockManager stockManager = new StockManager();
-    private static final SalesReport salesReport = new SalesReport(stockManager);
-    private static final OrderMenu orderMenu = new OrderMenu(salesReport);
+    private final Helper helper = new Helper();
+    private final UpdatePrice updatePrice;
+    private final StockManager stockManager;
+    private final SalesReport salesReport;
+    private final OrderMenu orderMenu;
 
-    public static void displayMainMenu() {
+    public App() {
+        this.stockManager = new StockManager();
+        this.updatePrice = new UpdatePrice(helper);
+        this.salesReport = new SalesReport(stockManager);
+        this.orderMenu = new OrderMenu(salesReport);
+    }
+
+    public void displayMainMenu() {
         System.out.println("\n===============================================================");
         System.out.println("Burrito King");
         System.out.println("===============================================================");
@@ -18,7 +25,7 @@ public class App {
         System.out.print("Please select: ");
     }
 
-    public static void main(String[] args) {
+    public void startApp() {
         boolean exit = false;
         while (!exit) {
             displayMainMenu();
@@ -42,5 +49,10 @@ public class App {
                     break;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        App app = new App();
+        app.startApp();
     }
 }
