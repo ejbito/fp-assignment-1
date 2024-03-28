@@ -4,15 +4,16 @@ import java.util.Map;
 import helpers.DoubleParser;
 import helpers.Helper;
 import helpers.IntParser;
+import menu.MenuItem;
 
 public class UpdatePrice {
     private static Helper helper = new Helper();
-    private static final Map<String, FoodItem> items = new HashMap<>();
+    private static final Map<String, MenuItem> items = new HashMap<>();
 
     static {
-        items.put("Burrito", new FoodItem("Burrito", 7.0));
-        items.put("Fries", new FoodItem("Fries", 4.0));
-        items.put("Soda", new FoodItem("Soda", 2.5));
+        items.put("Burrito", new MenuItem("Burrito", 7.0));
+        items.put("Fries", new MenuItem("Fries", 4.0));
+        items.put("Soda", new MenuItem("Soda", 2.5));
     }
 
     public void updatePriceMenu() {
@@ -53,7 +54,7 @@ public class UpdatePrice {
     }
 
     public void updatePrice(String name, double newPrice) {
-        FoodItem item = items.get(name);
+        MenuItem item = items.get(name);
         if (item != null) {
             item.setPrice(newPrice);
         } else {
@@ -61,7 +62,7 @@ public class UpdatePrice {
         }
     }
 
-    public FoodItem getFoodItem(String name) {
+    public MenuItem getFoodItem(String name) {
         return items.get(name);
     }
 }

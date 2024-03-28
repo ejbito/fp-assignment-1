@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import menu.MenuItem;
+
 public class Order {
-    private List<FoodItem> items = new ArrayList<>();
+    private List<MenuItem> items = new ArrayList<>();
     private boolean isMeal = false;
     private static final double MEAL_DISCOUNT = 3.0;
 
-    public void addItem(FoodItem item) {
+    public void addItem(MenuItem item) {
         items.add(item);
     }
 
@@ -16,7 +18,7 @@ public class Order {
 
     public double calculateTotal() {
         double total = 0;
-        for (FoodItem item : items) {
+        for (MenuItem item : items) {
             total += item.getPrice();
         }
         if (isMeal) {
@@ -25,7 +27,7 @@ public class Order {
         return total;
     }
 
-    public List<FoodItem> getItems() {
+    public List<MenuItem> getItems() {
         return new ArrayList<>(items);
     }
     

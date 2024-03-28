@@ -1,3 +1,5 @@
+import menu.MenuItem;
+
 public class SalesReport {
     private int burritosSold = 0;
     private int friesSold = 0;
@@ -15,7 +17,7 @@ public class SalesReport {
     }
 
     public void updateSales(Order order) {
-        for (FoodItem item : order.getItems()) {
+        for (MenuItem item : order.getItems()) {
             switch (item.getName().toLowerCase()) {
                 case "burrito":
                     if (order.isMeal()) {

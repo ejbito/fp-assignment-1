@@ -1,6 +1,7 @@
 import helpers.DoubleParser;
 import helpers.Helper;
 import helpers.IntParser;
+import menu.MenuItem;
 
 public class OrderMenu {
     private Helper helper = new Helper();
@@ -69,11 +70,11 @@ public class OrderMenu {
     }
 
     private void addItem(Order order, String itemName) {
-        FoodItem item = updatePrice.getFoodItem(itemName);
+        MenuItem item = updatePrice.getFoodItem(itemName);
         if (item != null) {
             int itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
             for (int i = 0; i < itemCount; i++) {
-                order.addItem(new FoodItem(item.getName(), item.getPrice()));
+                order.addItem(new MenuItem(item.getName(), item.getPrice()));
             }
             if ("Fries".equals(itemName)) {
                 calculateFriesTime(itemCount);
@@ -84,9 +85,9 @@ public class OrderMenu {
     }
     
     private void addMeal(Order order) {
-        FoodItem burrito = updatePrice.getFoodItem("Burrito");
-        FoodItem fries = updatePrice.getFoodItem("Fries");
-        FoodItem soda = updatePrice.getFoodItem("Soda");
+        MenuItem burrito = updatePrice.getFoodItem("Burrito");
+        MenuItem fries = updatePrice.getFoodItem("Fries");
+        MenuItem soda = updatePrice.getFoodItem("Soda");
     
         if (burrito != null && fries != null && soda != null) {
             order.addItem(burrito);
@@ -120,7 +121,7 @@ public class OrderMenu {
     private void displayWaitTime(Order order) {
         int burritoCount = 0;
         int friesCount = 0;
-        for (FoodItem item : order.getItems()) {
+        for (MenuItem item : order.getItems()) {
             if ("Burrito".equalsIgnoreCase(item.getName())) {
                 burritoCount++;
             } else if ("Fries".equalsIgnoreCase(item.getName())) {
