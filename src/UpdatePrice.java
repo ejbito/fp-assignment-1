@@ -52,8 +52,12 @@ public class UpdatePrice {
             }
             if (!exit && itemName != null) {
                 double newPrice = helper.getInput("Please enter new price: ", new DoubleParser());
-                updatePrice(itemName, newPrice);
-                System.out.println("The unit price of " + itemName.toLowerCase() + " is updated to $" + newPrice);
+                if (newPrice >= 0) {
+                    updatePrice(itemName, newPrice);
+                    System.out.println("The unit price of " + itemName.toLowerCase() + " is updated to $" + newPrice);
+                } else {
+                    System.out.println("Invalid price. Please enter a positive number.");
+                }
             }
         }
     }

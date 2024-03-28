@@ -12,7 +12,11 @@ public class Order {
     }
 
     public void addItem(MenuItem item) {
-        items.add(item);
+        if (item != null) {
+            items.add(item);
+        } else {
+            System.out.println("Cannot add a null item to the order.");
+        }
     }
 
     public void makeItAMeal() {

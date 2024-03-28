@@ -73,6 +73,10 @@ public class OrderMenu {
         MenuItem item = updatePrice.getFoodItem(itemName);
         if (item != null) {
             int itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
+            while (itemCount < 0) {
+                System.out.println("Invalid number of items. Please enter a positive number.");
+                itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
+            }
             for (int i = 0; i < itemCount; i++) {
                 order.addItem(new MenuItem(item.getName(), item.getPrice()));
             }
