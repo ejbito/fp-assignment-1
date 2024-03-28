@@ -1,6 +1,6 @@
 package menu;
 
-public class MenuItem {
+public abstract class MenuItem {
     private String name;
     private double price;
 

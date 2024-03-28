@@ -4,21 +4,25 @@ import java.util.Map;
 import helpers.DoubleParser;
 import helpers.Helper;
 import helpers.IntParser;
+import menu.Burrito;
+import menu.Fries;
 import menu.MenuItem;
+import menu.Soda;
+import interfaces.IUpdatePrice;
 
-public class UpdatePrice {
+public class UpdatePrice implements IUpdatePrice {
     private final Helper helper;
     private final Map<String, MenuItem> items = new HashMap<>();
 
     public UpdatePrice(Helper helper) {
         this.helper = helper;
-        initializeItems();
+        initialiseItems();
     }
 
-    private void initializeItems() {
-        items.put("Burrito", new MenuItem("Burrito", 7.0));
-        items.put("Fries", new MenuItem("Fries", 4.0));
-        items.put("Soda", new MenuItem("Soda", 2.5));
+    private void initialiseItems() {
+        items.put("Burrito", new Burrito(7.0));
+        items.put("Fries", new Fries(4.0));
+        items.put("Soda", new Soda(2.5));
     }
 
     public void updatePriceMenu() {
@@ -62,16 +66,18 @@ public class UpdatePrice {
         }
     }
 
-    public void updatePrice(String name, double newPrice) {
-        MenuItem item = items.get(name);
+    @Override
+    public void updatePrice(String itemName, double newPrice) {
+        MenuItem item = items.get(itemName);
         if (item != null) {
             item.setPrice(newPrice);
         } else {
-            System.out.println("Item not found: " + name);
+            System.out.println("Item not found: " + itemName);
         }
     }
 
-    public MenuItem getFoodItem(String name) {
-        return items.get(name);
+    @Override
+    public MenuItem getFoodItem(String itemName) {
+        return items.get(itemName);
     }
 }

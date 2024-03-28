@@ -1,7 +1,10 @@
 import helpers.DoubleParser;
 import helpers.Helper;
 import helpers.IntParser;
+import menu.Burrito;
+import menu.Fries;
 import menu.MenuItem;
+import menu.Soda;
 
 public class OrderMenu {
     private Helper helper = new Helper();
@@ -51,11 +54,11 @@ public class OrderMenu {
     private void updateFriesStock(int friesCount) {
         int currentStock = stockManager.getFriesStock();
         if (friesCount <= currentStock) {
-            stockManager.updateFriesStock(-friesCount);
+            stockManager.updateStock(-friesCount);
         } else {
             int friesNeeded = friesCount - currentStock;
             int batchesToCook = (int)Math.ceil((double) friesNeeded / 5);
-            stockManager.updateFriesStock((batchesToCook * 5) - friesCount);
+            stockManager.updateStock((batchesToCook * 5) - friesCount);
         }
     }
 
@@ -70,23 +73,35 @@ public class OrderMenu {
     }
 
     private void addItem(Order order, String itemName) {
-        MenuItem item = updatePrice.getFoodItem(itemName);
-        if (item != null) {
-            int itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
-            while (itemCount < 0) {
-                System.out.println("Invalid number of items. Please enter a positive number.");
-                itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
-            }
-            for (int i = 0; i < itemCount; i++) {
-                order.addItem(new MenuItem(item.getName(), item.getPrice()));
-            }
-            if ("Fries".equals(itemName)) {
+        MenuItem item = null;
+        int itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
+
+        while (itemCount < 0) {
+            System.out.println("Invalid number of items. Please enter a positive number.");
+            itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
+        }
+
+        switch (itemName) {
+            case "Burrito":
+                item = new Burrito(updatePrice.getFoodItem(itemName).getPrice());
+                break;
+            case "Fries":
+                item = new Fries(updatePrice.getFoodItem(itemName).getPrice());
                 calculateFriesTime(itemCount);
-            }
-        } else {
-            System.out.println("Item not found: " + itemName);
+                break;
+            case "Soda":
+                item = new Soda(updatePrice.getFoodItem(itemName).getPrice());
+                break;
+            default:
+                System.out.println("Item not found: " + itemName);
+                return;
+        }
+
+        for (int i = 0; i < itemCount; i++) {
+            order.addItem(item);
         }
     }
+
     
     private void addMeal(Order order) {
         MenuItem burrito = updatePrice.getFoodItem("Burrito");
@@ -97,7 +112,7 @@ public class OrderMenu {
             order.addItem(burrito);
             order.addItem(fries);
             order.addItem(soda);
-            stockManager.updateFriesStock(-1);
+            stockManager.updateStock(-1);
             order.makeItAMeal();
             System.out.println("Meal added to your order.");
         } else {

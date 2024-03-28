@@ -1,18 +1,23 @@
-public class StockManager {
-    private int friesStock = 0;
+import interfaces.IStockManager;
 
-    public void checkFriesStock() {
-        System.out.println("Current fries stock in warmer: " + friesStock);
-    }
+public class StockManager implements IStockManager {
+    private int friesStock = 0;
 
     public int getFriesStock() {
         return friesStock;
     }
 
-    public void updateFriesStock(int amount) {
-        friesStock += amount;
+    @Override
+    public void checkStock() {
+        System.out.println("Current fries stock in warmer: " + friesStock);
+    }
+
+    @Override
+    public void updateStock(int quantity) {
+        friesStock += quantity;
         if (friesStock < 0) {
             friesStock = 0;
+            System.out.println("Adjusted fries stock to 0 to prevent negative stock.");
         }
     }
 }
