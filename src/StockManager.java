@@ -17,7 +17,6 @@ public class StockManager implements IStockManager {
         friesStock += quantity;
         if (friesStock < 0) {
             friesStock = 0;
-            System.out.println("Adjusted fries stock to 0 to prevent negative stock.");
         }
     }
 }

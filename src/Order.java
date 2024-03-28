@@ -4,7 +4,7 @@ import menu.MenuItem;
 
 public class Order {
     private List<MenuItem> items = new ArrayList<>();
-    private boolean isMeal = false;
+    private int mealCount = 0;
     private double mealDiscount;
 
     public Order(double mealDiscount) {
@@ -19,26 +19,24 @@ public class Order {
         }
     }
 
-    public void makeItAMeal() {
-        this.isMeal = true;
+    public void addMeal(List<MenuItem> mealItems) {
+        if (mealItems != null) {
+            items.addAll(mealItems);
+            mealCount++;
+        }
     }
 
     public double calculateTotal() {
-        double total = 0;
-        for (MenuItem item : items) {
-            total += item.getPrice();
-        }
-        if (isMeal) {
-            total -= mealDiscount;
-        }
+        double total = items.stream().mapToDouble(MenuItem::getPrice).sum();
+        total -= (mealDiscount * mealCount);
         return total;
     }
 
     public List<MenuItem> getItems() {
         return new ArrayList<>(items);
     }
-    
+
     public boolean isMeal() {
-        return this.isMeal;
+        return mealCount > 0;
     }
 }

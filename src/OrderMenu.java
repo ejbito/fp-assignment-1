@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import helpers.DoubleParser;
 import helpers.Helper;
 import helpers.IntParser;
@@ -102,22 +105,14 @@ public class OrderMenu {
         }
     }
 
-    
     private void addMeal(Order order) {
-        MenuItem burrito = updatePrice.getFoodItem("Burrito");
-        MenuItem fries = updatePrice.getFoodItem("Fries");
-        MenuItem soda = updatePrice.getFoodItem("Soda");
-    
-        if (burrito != null && fries != null && soda != null) {
-            order.addItem(burrito);
-            order.addItem(fries);
-            order.addItem(soda);
-            stockManager.updateStock(-1);
-            order.makeItAMeal();
-            System.out.println("Meal added to your order.");
-        } else {
-            System.out.println("Unable to add meal to order. Item(s) not found.");
-        }
+        List<MenuItem> mealItems = new ArrayList<>();
+        mealItems.add(new Burrito(updatePrice.getFoodItem("Burrito").getPrice()));
+        mealItems.add(new Fries(updatePrice.getFoodItem("Fries").getPrice()));
+        mealItems.add(new Soda(updatePrice.getFoodItem("Soda").getPrice()));
+
+        order.addMeal(mealItems);
+        System.out.println("Meal added to your order.");
     }
 
     private void processPayment(Order order) {
