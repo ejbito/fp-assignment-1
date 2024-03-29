@@ -15,11 +15,20 @@ public class OrderMenu {
     private UpdatePrice updatePrice = new UpdatePrice(helper);
     private SalesReport salesReport;
 
+    /**
+     * Initialises a new OrderMenu with a link to a SalesReport.
+     * 
+     * @param salesReport The SalesReport object that will be updated with sales information from orders.
+     */
     public OrderMenu(SalesReport salesReport) {
         this.salesReport = salesReport;
     }
 
-    public void orderMenu() {
+    /**
+     * Starts the order menu process, allowing users to select and order menu items until they choose to exit.
+     * Users can order individual items, meals, or choose to complete their order.
+     */
+    public void displayOrderMenu() {
         Order order = new Order(3.00);
         boolean exit = false;
         while (!exit) {
@@ -54,6 +63,12 @@ public class OrderMenu {
         }
     }
 
+    /**
+     * Updates the stock for fries based on the number ordered. If there's not enough stock, it calculates
+     * how many additional fries need to be cooked.
+     * 
+     * @param friesCount The number of fries being ordered.
+     */
     private void updateFriesStock(int friesCount) {
         int currentStock = stockManager.getFriesStock();
         if (friesCount <= currentStock) {
@@ -65,6 +80,13 @@ public class OrderMenu {
         }
     }
 
+    /**
+     * Calculates the time needed to cook a given number of fries, based on the current stock and the number ordered.
+     * Assumes fries are cooked in batches of 5, with each batch taking 8 minutes to cook.
+     * 
+     * @param friesCount The number of fries being ordered.
+     * @return The time in minutes required to cook the fries if additional fries are needed beyond the current stock.
+     */
     private int calculateFriesTime(int friesCount) {
         int currentStock = stockManager.getFriesStock();
         int additionalFriesNeeded = friesCount - currentStock;
@@ -75,15 +97,20 @@ public class OrderMenu {
         return 0;
     }
 
+    /**
+     * Adds a specified number of a given menu item to the order. If the item is "Fries", it also calculates
+     * the cooking time based on the order quantity.
+     * 
+     * @param order The current order to which the item should be added.
+     * @param itemName The name of the item to be added (e.g., "Burrito", "Fries", "Soda").
+     */
     private void addItem(Order order, String itemName) {
         MenuItem item = null;
         int itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
-
         while (itemCount < 0) {
             System.out.println("Invalid number of items. Please enter a positive number.");
             itemCount = helper.getInput("How many " + itemName.toLowerCase() + "s would you like to buy: ", new IntParser());
         }
-
         switch (itemName) {
             case "Burrito":
                 item = new Burrito(updatePrice.getFoodItem(itemName).getPrice());
@@ -99,22 +126,31 @@ public class OrderMenu {
                 System.out.println("Item not found: " + itemName);
                 return;
         }
-
         for (int i = 0; i < itemCount; i++) {
             order.addItem(item);
         }
     }
 
+    /**
+     * Adds a predefined meal (1 Burrito, 1 Fries, 1 Soda) to the order and prints a confirmation message.
+     * 
+     * @param order The current order to which the meal should be added.
+     */
     private void addMeal(Order order) {
         List<MenuItem> mealItems = new ArrayList<>();
         mealItems.add(new Burrito(updatePrice.getFoodItem("Burrito").getPrice()));
         mealItems.add(new Fries(updatePrice.getFoodItem("Fries").getPrice()));
         mealItems.add(new Soda(updatePrice.getFoodItem("Soda").getPrice()));
-
         order.addMeal(mealItems);
         System.out.println("Meal added to your order.");
     }
 
+    /**
+     * Processes the payment for the current order, prints the total, collects payment from the user,
+     * calculates and prints the change, updates the sales report, and displays the wait time.
+     * 
+     * @param order The order for which payment is being processed.
+     */
     private void processPayment(Order order) {
         double total = order.calculateTotal();
         System.out.println("\nTotal for your order is $" + String.format("%.2f", total));
@@ -132,6 +168,13 @@ public class OrderMenu {
         displayWaitTime(order);
     }
 
+    /**
+     * Displays the estimated wait time for the current order based on the items ordered.
+     * Calculates wait times for burritos and fries separately and uses the maximum of the two as the total wait time.
+     * Also updates the fries stock based on the order.
+     * 
+     * @param order The order for which the wait time is being calculated.
+     */
     private void displayWaitTime(Order order) {
         int burritoCount = 0;
         int friesCount = 0;
@@ -142,17 +185,12 @@ public class OrderMenu {
                 friesCount++;
             }
         }
-    
         int burritoBatches = (int) Math.ceil(burritoCount / 2.0);
         int burritoTime = burritoBatches * 9;
-    
         int friesTime = calculateFriesTime(friesCount);
-    
         int totalWaitTime = Math.max(burritoTime, friesTime);
         System.out.println("\nEstimated wait time for your order is: " + totalWaitTime + " minutes.");
-    
         updateFriesStock(friesCount);
-    
         System.out.println(stockManager.getFriesStock() + " serves of fries will be left for next order.");
     }
 }

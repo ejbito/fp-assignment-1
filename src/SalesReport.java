@@ -12,10 +12,23 @@ public class SalesReport {
 
     private StockManager stockManager;
 
+    /**
+     * Initialises a new SalesReport with a reference to the StockManager.
+     * 
+     * @param stockManager The StockManager instance that tracks stock levels of items.
+     */
     public SalesReport(StockManager stockManager) {
         this.stockManager = stockManager;
     }
 
+    /**
+     * Updates the sales report based on the contents of the given order. It tallies the items sold,
+     * calculates revenue from each item type, and updates the total sales. If items are part of a meal,
+     * they are discounted accordingly.
+     * 
+     * @param order The order from which sales data will be updated. The method checks if an order is a meal
+     * and applies discounts and tallies accordingly.
+     */
     public void updateSales(Order order) {
         for (MenuItem item : order.getItems()) {
             switch (item.getName().toLowerCase()) {
@@ -52,8 +65,12 @@ public class SalesReport {
         }
         totalSales = burritosRevenue + friesRevenue + sodasRevenue;
     }
-    
 
+    /**
+     * Displays a summary of the sales report. It includes the unsold servers of fries, the total number of
+     * each item sold, revenue generated from each item, and the total sales. It also reports the total number
+     * of meals sold.
+     */
     public void showSalesReport() {
         System.out.println("\n..................................");
         System.out.println("Unsold Servers of Fries: " + stockManager.getFriesStock());

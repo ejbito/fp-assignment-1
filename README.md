@@ -1,4 +1,5 @@
 # COSC2391 Further Programming | RMIT University
+
 ### Assignment 1 - Semester 1 2024
 
 ## Getting Started
