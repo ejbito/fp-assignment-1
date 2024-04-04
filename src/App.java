@@ -14,9 +14,9 @@ public class App {
      */
     public App() {
         this.stockManager = new StockManager();
-        this.updatePrice = new UpdatePrice(helper);
+        this.updatePrice = new UpdatePrice();
         this.salesReport = new SalesReport(stockManager);
-        this.orderMenu = new OrderMenu(salesReport, updatePrice);
+        this.orderMenu = new OrderMenu(stockManager, salesReport, updatePrice);
     }
 
     /**

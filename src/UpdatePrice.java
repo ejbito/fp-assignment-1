@@ -11,7 +11,7 @@ import menu.Soda;
 import interfaces.IUpdatePrice;
 
 public class UpdatePrice implements IUpdatePrice {
-    private final Helper helper;
+    private final Helper helper = new Helper();
     final Map<String, MenuItem> items = new HashMap<>();
 
     /**
@@ -20,8 +20,7 @@ public class UpdatePrice implements IUpdatePrice {
      * 
      * @param helper The helper object used for input parsing.
      */
-    public UpdatePrice(Helper helper) {
-        this.helper = helper;
+    public UpdatePrice() {
         initialiseItems();
     }
 
