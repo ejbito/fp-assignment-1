@@ -12,7 +12,7 @@ import interfaces.IUpdatePrice;
 
 public class UpdatePrice implements IUpdatePrice {
     private final Helper helper;
-    private final Map<String, MenuItem> items = new HashMap<>();
+    final Map<String, MenuItem> items = new HashMap<>();
 
     /**
      * Constructs an UpdatePrice object with a reference to a Helper object.

@@ -12,7 +12,7 @@ import menu.Soda;
 public class OrderMenu {
     private Helper helper = new Helper();
     private StockManager stockManager = new StockManager();
-    private UpdatePrice updatePrice = new UpdatePrice(helper);
+    private UpdatePrice updatePrice;
     private SalesReport salesReport;
 
     /**
@@ -20,8 +20,9 @@ public class OrderMenu {
      * 
      * @param salesReport The SalesReport object that will be updated with sales information from orders.
      */
-    public OrderMenu(SalesReport salesReport) {
+    public OrderMenu(SalesReport salesReport, UpdatePrice updatePrice) {
         this.salesReport = salesReport;
+        this.updatePrice = updatePrice;
     }
 
     /**
