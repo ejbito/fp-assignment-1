@@ -1,7 +1,7 @@
 import helpers.Helper;
 
 public class App {
-    private final Helper helper = new Helper();
+    private final Helper helper;
     private final UpdatePrice updatePrice;
     private final StockManager stockManager;
     private final SalesReport salesReport;
@@ -13,10 +13,11 @@ public class App {
      * updating prices, reporting sales, and processing orders.
      */
     public App() {
+        this.helper = new Helper();
         this.stockManager = new StockManager();
-        this.updatePrice = new UpdatePrice();
+        this.updatePrice = new UpdatePrice(helper);
         this.salesReport = new SalesReport(stockManager);
-        this.orderMenu = new OrderMenu(stockManager, salesReport, updatePrice);
+        this.orderMenu = new OrderMenu(helper, stockManager, salesReport, updatePrice);
     }
 
     /**

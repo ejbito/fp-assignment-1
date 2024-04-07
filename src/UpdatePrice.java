@@ -11,8 +11,8 @@ import menu.Soda;
 import interfaces.IUpdatePrice;
 
 public class UpdatePrice implements IUpdatePrice {
-    private final Helper helper = new Helper();
-    final Map<String, MenuItem> items = new HashMap<>();
+    private Helper helper;
+    private Map<String, MenuItem> items = new HashMap<>();
 
     /**
      * Constructs an UpdatePrice object with a reference to a Helper object.
@@ -20,7 +20,8 @@ public class UpdatePrice implements IUpdatePrice {
      * 
      * @param helper The helper object used for input parsing.
      */
-    public UpdatePrice() {
+    public UpdatePrice(Helper helper) {
+        this.helper = helper;
         initialiseItems();
     }
 
