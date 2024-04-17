@@ -43,7 +43,7 @@ public class App {
         boolean exit = false;
         while (!exit) {
             displayMainMenu();
-            String userInput = helper.getUserInput();
+            String userInput = helper.getUserInput().toLowerCase();
             switch (userInput) {
                 case "a":
                     orderMenu.displayOrderMenu();
